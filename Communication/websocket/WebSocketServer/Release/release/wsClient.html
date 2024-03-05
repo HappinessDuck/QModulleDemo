@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>wsClient</title>
+</head>
+
+<body>
+    <h1>webServer Test Website</h1>
+	<input type="text" id="result" style="width: 300px;" >
+    <div>
+        <button onclick="wss_test1()">发送</button>
+
+    </div>
+	<textarea id="recv" name="txt" clos="300" rows="30" warp="virtual" style="width: 600px;" height="200px" ></textarea>
+
+
+
+	<script language="javascript" type="text/javascript">
+	
+	
+	var ws = new WebSocket('wss://127.0.0.1:8080');
+
+		ws.onopen = function () 
+		{
+			recv.value= "connect server";
+			ws.send("son");
+		};
+		ws.onmessage = function (e) 
+		{
+			console.log('from server: ' + e.data);
+			recv.value= recv.value+ e.data;
+		};
+	
+	    ws.onerror = function (e) {
+            console.error("error " + e);
+			//console.log('websocket 断开: ' + e.code + ' ' + e.reason + ' ' + e.wasClean)
+			recv.value= "link error";
+        };
+	
+	function wss_test1()
+	{	
+		var msg = result.value;
+		ws.send(msg);
+	}
+	
+
+
+
+    </script>
+
+
+
+</body>
+
+
+
+
+</html>
